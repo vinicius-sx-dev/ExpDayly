@@ -11,6 +11,7 @@
     "express": "^5.3.0",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.5.0",
-    "mysql2": "^3.24.6"
+    "mysql2": "^3.24.6",
+    "rate-limiter-flexible": "^11.6.1"
   }
 }

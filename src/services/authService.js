@@ -10,6 +10,8 @@ const {
   verificarToken
 } = require('../utils/jwt');
 
+const { loginEmailLimiter } = require('../security/rateLimiters');
+
 const userRepo = require('../repositories/userRepo');
 
 async function createUser(name, email, password) {
@@ -50,8 +52,11 @@ async function logUser(email, password) {
     const verification = await comparePassword(password, previous_password)
 
     if(!verification){
-      throw new Error("Email ou senha inválidos")
+      await loginEmailLimiter.consume(email);
+      throw new Error("Email ou senha inválidos");
     }
+
+    await loginEmailLimiter.delete(email)
 
     const agora = new Date();
 
