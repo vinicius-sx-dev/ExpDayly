@@ -25,6 +25,31 @@ async function createUser(name, email, hash_password) {
 
 }
 
+
+async function getData(email) {
+
+  try {
+
+    const getDataQuery = "SELECT id, email, hashed_password, role FROM User WHERE email = ? ";
+
+    const [getData] = await pool.execute(getDataQuery, [email]);
+
+    const data = getData[0]
+
+    if(!data || data == null){
+      throw new Error("Email ou senha inválidos")
+    }
+
+    return data;
+  
+  } catch (error) {
+    console.error("Erro no banco de dados ao criar usuário | ", error);
+    throw error;
+  }
+
+}
+
 module.exports = {
-  createUser
+  createUser,
+  getData,
 }

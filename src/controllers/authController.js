@@ -26,6 +26,27 @@ async function createUser(req, res){
   }
 }
 
+async function logUser(req, res){
+  try {
+
+    const {email, password} = req.body;
+
+    const response = await authService.logUser(email, password)
+
+    return res.status(201).json({
+      mensagem: "User in",
+      token: response
+    })
+    
+  } catch (error) {
+    console.error("Erro interno ao logar | ", error)
+    return res.status(500).json({
+      mensagem: `Erro interno ao logar ${error}`
+    })
+  }
+}
+
 module.exports ={
-  createUser
+  createUser,
+  logUser,
 }

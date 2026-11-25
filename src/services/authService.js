@@ -36,6 +36,50 @@ async function createUser(name, email, password) {
 
 }
 
+
+async function logUser(email, password) {
+
+  try {
+
+    const getData = await userRepo.getData(email);
+
+    const previous_password = getData.hashed_password;
+    const previous_role = getData.role;
+    const id = getData.id;
+
+    const verification = await comparePassword(password, previous_password)
+
+    if(!verification){
+      throw new Error("Email ou senha inválidos")
+    }
+
+    const agora = new Date();
+
+    // console.log(agora.getHours());   
+    // console.log(agora.getMinutes()); 
+    const hourMin = agora.toLocaleTimeString('pt-BR')
+
+    const token = gerarToken({
+      id: id,
+      role: previous_role,
+      time: hourMin
+    })
+  
+    if(!token){
+      throw new Error("Erro ao gerar token")
+    }
+
+    return token;
+
+  } catch (error) {
+    console.error("Erro na camada de serviço ao logar usuário | ", error);
+    throw new Error(error)
+  }
+
+}
+
+
 module.exports = {
-  createUser
+  createUser,
+  logUser,
 }

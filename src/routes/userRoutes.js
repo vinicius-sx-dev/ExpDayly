@@ -1,13 +1,15 @@
 const express = require('express');
-const { verifyCreateUser } = require('../schemas/userCreation')
+const { verifyCreateUser, verifyLogUser } = require('../schemas/userCreation')
 
 const {
-  createUser
+  createUser,
+  logUser
 } = require('../controllers/authController');
 
 const router = express.Router();
 
 router.post('/', verifyCreateUser, createUser);
+router.post('/auth', verifyLogUser, logUser)
 
 module.exports = router;
 
