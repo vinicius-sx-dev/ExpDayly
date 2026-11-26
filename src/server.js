@@ -1,9 +1,18 @@
-require('dotenv').config(); 
+require('dotenv').config();
 
-const app = require('./app');
+const { verifyUp } = require('../src/security/upServer')
 
-const PORT = process.env.PORT || 3001;
+async function start() {
+  await verifyUp()
 
-app.listen(PORT, () => {
-  console.log(`SERVIDOR RODANDO EM http://localhost:${PORT}`);
-});
+  const app = require('./app');
+
+  const PORT = process.env.PORT || 3001;
+
+  app.listen(PORT, () => {
+    console.log(`SERVIDOR RODANDO EM http://localhost:${PORT}`);
+  });
+
+}
+
+start()
