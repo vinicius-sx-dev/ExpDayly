@@ -31,7 +31,9 @@ function verifyInsertValue(req, res, next) {
 
   const splitDatetime = cleanedDatetime.split('')
 
-  if (cleanedDatetime.length != 8) return res.status(403).json({ mensagem: "Data inválida " })
+  const mysqlDateTimeRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]) ([01]\d|2[0-3]):[0-5]\d:[0-5]\d$/;
+
+  if (!mysqlDateTimeRegex.test(cleanedDatetime)) return res.status(403).json({ mensagem: "Data inválida " })
 
   if (cleanedType != 'expense' && cleanedType != 'income' && cleanedType != 'saving') return res.status(403).json({ mensagem: "Tipo inválido" })
 

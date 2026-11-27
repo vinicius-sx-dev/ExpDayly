@@ -12,7 +12,7 @@ async function insertValue(type, gender, amount, datetime, description, id) {
             desc = description
         }
 
-        const insertValueQuery = "INSERTO INTO Value ()";
+        const insertValueQuery = "INSERT INTO Value (type, gender, amount, date_time, description, user_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         const [insertValue] = await pool.execute(insertValueQuery, [type, gender, amount, datetime, desc, id]);
 
