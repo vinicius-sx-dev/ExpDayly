@@ -6,6 +6,7 @@ import { useTheme } from "../../Contexts/Themes";
 import night from '../../../assets/night.jpg';
 import day from '../../../assets/day.jpg';
 import sunset from '../../../assets/sunset.jpg';
+import plusIcon from '../../../assets/plus-icon.png'
 
 export default function HomeScreen({ navigation }) {
   const { theme, isDark, toggleTheme } = useTheme();
@@ -112,6 +113,56 @@ export default function HomeScreen({ navigation }) {
     organizeData(mockedData)
   }, [])
 
+
+
+  const [creationView, setCreationView] = useState(false);
+
+  function changeCreationView() {
+    setCreationView(!creationView)
+    console.log(creationView)
+  }
+
+  const initialGenres = [
+    { name: 'food' },
+    { name: 'gasoline' },
+    { name: 'medicine' },
+    { name: 'streaming mensality' },
+    { name: 'gym' },
+  ];
+
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  function toggleGenre(item) {
+
+    const isSelected = selectedGenres.some(el => el.name === item.name);
+
+    if (isSelected) {
+
+      setSelectedGenres(selectedGenres.filter(el => el.name !== item.name));
+    } else {
+
+      setSelectedGenres([...selectedGenres, item]);
+    }
+  }
+
+  function maskDateBR(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 8);
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+  }
+
+  function maskTime(value) {
+    const digits = value.replace(/\D/g, '').slice(0, 4);
+    if (digits.length <= 2) return digits;
+    return `${digits.slice(0, 2)}:${digits.slice(2)}`;
+  }
+
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+
+
+
   return <>
 
     <ScrollView>
@@ -198,6 +249,145 @@ export default function HomeScreen({ navigation }) {
           </View>
 
         </View>
+
+        <View>
+
+          <TouchableOpacity
+            style={theme.iconButton}
+            onPress={() => {
+              changeCreationView()
+            }}
+          >
+            <Image
+              style={[theme.icon]}
+              source={plusIcon}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+
+        </View>
+
+        {
+          creationView
+            ?
+            <>
+              <View style={theme.card}>
+
+                <Text style={theme.title}>Lançar novo valor</Text>
+
+                <Text>Type</Text>
+                <TextInput
+                  style={theme.input}
+                  placeholder="Expense, Income or Saving"
+                />
+
+                <Text>Gender</Text>
+                <View style={theme.genresContainer}>
+                  {initialGenres.map((item, index) => (
+                    <TouchableOpacity key={index} style={theme.genreCard}
+                      activeOpacity={1}
+                      onPress={() => {
+                        toggleGenre(item)
+                      }
+                      }
+                    >
+                      <Text>{item.name}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                <View style={theme.genresContainer}>
+                  {initialGenres.map((item, index) => {
+                    const isSelected = selectedGenres.some(el => el.name === item.name);
+
+                    return (
+                      <TouchableOpacity
+                        key={index}
+
+                        style={{ backgroundColor: '#719059', display: isSelected ? 'flex' : 'none', padding: 5, borderRadius: 10 }}
+                        activeOpacity={1}
+                        onPress={() => toggleGenre(item)}
+                      >
+                        <Text style={{ color: '#fff' }}>{item.name}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+
+
+                <Text>Amount</Text>
+
+                <TextInput
+                  style={theme.input}
+                  placeholder="Ex: 120.00"
+                  type='number'
+                />
+
+                <Text>Datetime</Text>
+
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', }}>
+
+                  <TextInput
+                    style={
+                      {
+                        elevation: 1,
+                        width: '30%',
+                        paddingVertical: 8,
+                        paddingHorizontal: 5,
+                        borderRadius: 10,
+                        backgroundColor: '#fff',
+                        marginVertical: 10
+                      }}
+                    placeholder="dd/mm/aaaa"
+                    keyboardType="numeric"
+                    maxLength={10}
+                    value={date}
+                    onChangeText={(text) => setDate(maskDateBR(text))}
+                  />
+
+                  <Text>At</Text>
+
+                  <TextInput
+                    style={
+                      {
+                        elevation: 1,
+                        width: '30%',
+                        paddingVertical: 8,
+                        paddingHorizontal: 5,
+                        borderRadius: 10,
+                        backgroundColor: '#fff',
+                        marginVertical: 10
+                      }}
+                    placeholder="hh:mm"
+                    keyboardType="numeric"
+                    maxLength={5}
+                    value={time}
+                    onChangeText={(text) => setTime(maskTime(text))}
+                  />
+
+                </View>
+
+                <View>
+
+                  <TouchableOpacity
+                    style={[theme.button, {backgroundColor: '#719059'}]}
+                  >
+
+                    <Text style={{color: '#fff'}}>Lançar</Text>
+
+                  </TouchableOpacity>
+
+                </View>
+
+              </View>
+
+            </>
+            :
+            null
+
+        }
+
+
 
       </View>
     </ScrollView>

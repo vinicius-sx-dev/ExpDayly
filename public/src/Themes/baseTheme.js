@@ -58,7 +58,41 @@ const base = {
   graphicText:{
     fontSize: 10,
     marginRight: 10
-  }
+  },
+  iconButton:{
+    width: width * 0.2,
+    height: height * 0.1,
+    backgroundColor:'#9e9e9e',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '100%',
+    padding: 5,
+    elevation: 3,
+    alignSelf: 'center',
+    marginVertical: 10
+  },
+  icon:{
+    width: '80%',
+    height: '80%',
+    paddingHorizontal: 20
+  },
+  genreCard: {
+    padding: 2,
+    borderRadius: 5,
+    borderWidth: 1,
+    margin: 5,
+  },
+  genresContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  genreCard: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 5,
+    borderWidth: 1,
+    margin: 5,
+  },
 
 };
 
@@ -102,7 +136,20 @@ export const lightTheme = StyleSheet.create({
   },
   graphicText: {
     ...base.graphicText
-  }
+  },
+  icon:{
+    ...base.icon
+  },
+  iconButton:{
+    ...base.iconButton
+  },
+  genresContainer:{
+    ...base.genresContainer
+  },
+  genreCard: {
+    ...base.genreCard
+  },
+  
 });
 
 export const darkTheme = StyleSheet.create({
@@ -145,5 +192,18 @@ export const darkTheme = StyleSheet.create({
   },
   graphicText: {
     ...base.graphicText
-  }
+  },
+  icon:{
+    ...base.icon
+  },
+  iconButton:{
+    ...base.iconButton
+  },
+  genreCard: {
+    ...base.genreCard
+  },
+  genresContainer:{
+    ...base.genresContainer
+  },
+  
 })
