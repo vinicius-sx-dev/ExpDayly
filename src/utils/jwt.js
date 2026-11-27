@@ -16,6 +16,7 @@ function gerarToken(payload) {
     return token;
   }catch(error){
     console.error('Erro ao gerar token: ', error);
+    throw new Error('Erro ao gerar token')
   }
 
 }
@@ -30,7 +31,7 @@ function verificarToken(token){
 
   }catch(error){
     console.error('Token inválido ou expirado', error);
-    return null
+    throw new Error('Token inválido ou expirado')
   }
 
 }
@@ -40,7 +41,7 @@ function extractBearerToken(header){
   const tokenInteiro = header.authorization;
 
   if(!tokenInteiro){
-    return null
+    throw new Error('Token não presente')
   }
 
   const token = tokenInteiro.split(" ")[1];
@@ -48,11 +49,11 @@ function extractBearerToken(header){
   const type = tokenInteiro.split(" ")[0];
 
   if(type != "Bearer"){
-    return null
+    throw new Error('Formato de token inválido')
   }
 
   if(!token){
-    return null
+    throw new Error('Formato de token inválido')
   }
 
   return token;
