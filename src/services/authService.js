@@ -84,7 +84,23 @@ async function logUser(email, password) {
 }
 
 
+async function getUser(id){
+
+  try {
+
+    const usuario = await userRepo.getUser()
+
+    return usuario;
+    
+  } catch (error) {
+    console.error("Erro na camada de serviço ao logar usuário | ", error);
+    throw new Error(error)   
+  }
+
+}
+
 module.exports = {
   createUser,
   logUser,
+  getUser,
 }

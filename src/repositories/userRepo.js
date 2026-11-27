@@ -43,7 +43,30 @@ async function getData(email) {
     return data;
   
   } catch (error) {
-    console.error("Erro no banco de dados ao criar usuário | ", error);
+    console.error("Erro no banco de dados ao buscar dados do usuário | ", error);
+    throw error;
+  }
+
+}
+
+async function getUser(id){
+ 
+  try {
+
+    const getDataQuery = "SELECT email, role FROM User WHERE id = ? ";
+
+    const [getData] = await pool.execute(getDataQuery, [id]);
+
+    const data = getData[0]
+
+    if(!data || data == null){
+      throw new Error("Usuário inválido")
+    }
+
+    return data;
+  
+  } catch (error) {
+    console.error("Erro no banco de dados ao buscar usuário | ", error);
     throw error;
   }
 
@@ -52,4 +75,5 @@ async function getData(email) {
 module.exports = {
   createUser,
   getData,
+  getUser
 }

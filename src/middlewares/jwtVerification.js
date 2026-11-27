@@ -7,7 +7,7 @@ async function verify(req, res, next){
 
     verificarToken(token)  
 
-    req.token = token
+    req.token = token.id
 
     next()
 
@@ -19,8 +19,8 @@ async function verify(req, res, next){
     })
   }
 
-  
+}
 
-  
-
+module.exports = {
+  verify
 }
