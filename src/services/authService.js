@@ -88,7 +88,7 @@ async function getUser(id){
 
   try {
 
-    const usuario = await userRepo.getUser()
+    const usuario = await userRepo.getUser(id)
 
     return usuario;
     

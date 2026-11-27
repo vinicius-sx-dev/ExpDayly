@@ -86,7 +86,7 @@ async function getUser(req, res){
   } catch (error) {
     console.error('Erro ao pegar usuário');
     return res.status(500).json({
-      mensagem: 'Erro aopegar o usuário'
+      mensagem: 'Erro ao pegar o usuário'
     });
   }
 

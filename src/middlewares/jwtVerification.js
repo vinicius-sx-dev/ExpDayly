@@ -5,9 +5,9 @@ async function verify(req, res, next){
   try {
     const token = extractBearerToken(req.headers);
 
-    verificarToken(token)  
+    const decoded = verificarToken(token)  
 
-    req.token = token.id
+    req.id = decoded.id
 
     next()
 
