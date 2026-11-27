@@ -1,8 +1,8 @@
 const express = require('express');
-const { verifyInsertExpense } = require('../schemas/expensesSchemas')
+const { verifyInsertValue } = require('../schemas/expensesSchemas')
 
 const {
-  insertExpense,
+  insertValue,
 } = require('../controllers/expensesController');
 
 const rateLimitIpMiddleware = require('../middlewares/rateLimitIp');
@@ -13,6 +13,6 @@ const router = express.Router();
 router.use(rateLimitIpMiddleware)
 router.use(verify)
 
-router.post('/', verifyInsertExpense, insertExpense);
+router.post('/', verifyInsertValue, insertValue);
 
 module.exports = router;

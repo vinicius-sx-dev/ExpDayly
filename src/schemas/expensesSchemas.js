@@ -16,9 +16,9 @@ function validateFields(fields, req, res){
 }
 
 
-function verifyInsertExpense(req, res, next) {
+function verifyInsertValue(req, res, next) {
 
-  validateFields(['type', 'gender', 'amount', 'datetime'], req, res)
+  validateFields(['type', 'gender', 'amount', 'datetime', 'description'], req, res)
 
   const { type, gender, amount, datetime } = req.body
 
@@ -33,14 +33,14 @@ function verifyInsertExpense(req, res, next) {
 
   if (cleanedDatetime.length != 8) return res.status(403).json({ mensagem: "Data inválida " })
 
-  if (cleanedType != 'expense') return res.status(403).json({ mensagem: "Despesa inválida " })
+  if (cleanedType != 'expense' && cleanedType != 'income' && cleanedType != 'saving') return res.status(403).json({ mensagem: "Tipo inválido" })
 
-  if (String(password).length < 6) return res.status(403).json({ mensagem: "Senha fraca" })
+  if (Number(cleanedAmount) <= 0) return res.status(403).json({ mensagem: "Tipo inválido" })
 
   next();
 }
 
 
 module.exports = {
-    verifyInsertExpense
+    verifyInsertValue
 }

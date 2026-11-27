@@ -1,11 +1,17 @@
 const expensesService = require('../services/expensesService')
 
-async function insertExpense(req, res) {
+async function insertValue(req, res) {
 
     try {
 
-        const { type, gender, amount, datetime } = req.body;
+        const { type, gender, amount, datetime, description } = req.body;
         const id = req.id;
+
+        await expensesService.insertValue(type, gender, amount, datetime, description, id)
+
+        return res.status(201).json({
+            mensagem: "expense inserida com sucesso"
+        })
 
     } catch (error) {
 
@@ -19,5 +25,5 @@ async function insertExpense(req, res) {
 }
 
 module.exports = {
-    insertExpense
+    insertValue
 }
